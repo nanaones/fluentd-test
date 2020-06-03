@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db-maria-source:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./db/maria/source/init:/docker-entrypoint-initdb.d
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+     - fluentd-tester
+
+  db-maria-analytics:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./db/maria/analytics/init:/docker-entrypoint-initdb.d
+    ports:
+      - "23306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+     - fluentd-tester
+
+networks:
+  fluentd-tester:
